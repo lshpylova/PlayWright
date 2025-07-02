@@ -1,5 +1,5 @@
 // tests/fixtures/findTicketsFixture.js
-const base = require('@playwright/test').test;
+const base = require("@playwright/test").test;
 
 exports.test = base.extend({
   findTicketsData: async ({}, use) => {
@@ -12,8 +12,7 @@ exports.test = base.extend({
       firstName: "Test",
       lastName: "LastName",
       email: "olena@getMaxListeners.com",
-      discountList: "Дитячий - до 6 років, -20%"
-
+      discountList: "Дитячий - до 6 років, -20%",
     };
     await use(data);
   },

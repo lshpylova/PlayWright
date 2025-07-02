@@ -23,7 +23,14 @@ exports.FindTicketsPage = class FindTicketsPage {
     );
     this.formSupportActions = page.locator("[id=Formofsupport-actions] button");
     this.verifyCardsExists = page.locator("css=div.MuiPaper-root.MuiCard-root");
+    this.startDate = page.locator("[data-testid='start-time-date']");
+    this.endDate = page.locator("[data-testid='end-time-date']");
+    this.station = page.locator("[data-testid='start-station-station']");
+    this.stationCity = page.locator("[data-testid='end-station-city']");
+    this.carrierLabel = page.locator("[data-testid='carrier-label']");
+    this.time = page.locator("[data-testid='start-time-date']");
   }
+
   async goToMainPage(link) {
     await this.page.goto(link);
   }
@@ -63,7 +70,7 @@ exports.FindTicketsPage = class FindTicketsPage {
   async verifyPageResult() {
     await this.page.waitForLoadState("load");
     await this.page.locator('[role="menu"]').evaluateAll((menus) => {
-      menus.forEach((m) => (m.style.display = "none")); // або m.remove()
+      menus.forEach((m) => (m.style.display = "none")); 
     });
     await expect(this.verifyCardsExists.first()).toBeVisible({
       timeout: 10000,
@@ -71,5 +78,18 @@ exports.FindTicketsPage = class FindTicketsPage {
     await expect(this.verifyCardsExists.first()).toBeEnabled({
       timeout: 10000,
     });
+  }
+
+  async verifyTripCardData(){
+      await expect(this.startDate.first()).toBeVisible({timeout: 10000});
+      await expect(this.startDate.first()).toBeEnabled({timeout: 10000});
+      await expect(this.endDate.first()).not.toBeEmpty({timeout: 10000});
+      await expect(this.endDate.first()).toBeEnabled({timeout: 10000});
+      await expect(this.station.first()).toBeEnabled({timeout: 10000});
+      await expect(this.stationCity.first()).not.toBeEmpty({timeout: 10000});
+      await expect(this.carrierLabel.first()).not.toBeEmpty({timeout: 10000});
+      await expect(this.time.first()).toBeEnabled({timeout: 10000});
+      await expect(this.time.first()).not.toBeEmpty({timeout: 10000});
+
   }
 };
