@@ -53,16 +53,13 @@ exports.FindTicketsPage = class FindTicketsPage {
   async findTickets() {
     await expect(this.findTickets_button).toBeVisible({ timeout: 10000 });
     await expect(this.findTickets_button).toBeEnabled({ timeout: 10000 });
-    await this.findTickets_button.click({ force: true });
-    await this.page.waitForTimeout(5000);
-    await this.findTickets_button.click({ force: true });
-    await this.page.waitForTimeout(5000);
+    await this.findTickets_button.click({ force: true, timeout: 10000 });
   }
 
   async selectFirstTicket() {
     await this.select_button.first().click({ timeout: 10000 });
   }
-  
+
   async verifyPageResult() {
     await this.page.waitForLoadState("load");
     await this.page.locator('[role="menu"]').evaluateAll((menus) => {
