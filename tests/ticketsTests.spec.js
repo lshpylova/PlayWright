@@ -1,4 +1,5 @@
-const { test, expect } = require("@playwright/test");
+ const { expect } = require("@playwright/test");
+ const { test } = require('../tests/fixture/findTicketsFixture');
 import { FindTicketsPage } from "../pages/findTickets";
 import { PassengerInfo } from "../pages/passengerInfo";
 //Використовую Page Object model для стоврення тестів
@@ -8,17 +9,14 @@ import { PassengerInfo } from "../pages/passengerInfo";
 //Заповнити реєстраційні дані
 
 //Тест1.Знайти квитки по заданим параметрам;
-test.skip("Find ticket", async ({ page }) => {
-  const searchCity1 = "Kyiv";
-  const searchCity2 = "Gdansk";
-  const date = 11;
-  const loginMainPage = "https://klr.com.ua/en/bus/khmelnytskyi/bonn";
+test('Find ticket', async ({ page, findTicketsData }) => {
+  
   const searchForTickets = new FindTicketsPage(page);
 
-  await searchForTickets.goToMainPage(loginMainPage);
-  await searchForTickets.enterFromCity(searchCity1);
-  await searchForTickets.enterToCity(searchCity2);
-  await searchForTickets.selectDate(date);
+  await searchForTickets.goToMainPage(findTicketsData.link);
+  await searchForTickets.enterFromCity(findTicketsData.city1);
+  await searchForTickets.enterToCity(findTicketsData.city2);
+  await searchForTickets.selectDate(findTicketsData.date);
   await searchForTickets.enterQuantityOfPassengers();
   await searchForTickets.findTickets();
   await searchForTickets.verifyPageResult();
