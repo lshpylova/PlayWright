@@ -28,15 +28,15 @@ exports.PassengerInfo = class PassengerInfo {
         await this.calendar_year.click();
         await this.calendar_year_select.click();
         await this.calendar_date.click();
-
         await this.customerPhone_input.fill(phoneNumber);
         await this.customerEmail_input.fill(email);
         await this.accept_checkbox.click();
     
     }
   async verifyPageResult(){
+    await expect(this.accept_checkbox).toBeChecked({timeout: 10000})
     await expect(this.continue_button).toBeVisible({timeout: 10000})
-    await expect(this.continue_button).toBeEditable({timeout: 10000})
+    await expect(this.continue_button).toBeEnabled({timeout: 10000})
    }
 
 }
