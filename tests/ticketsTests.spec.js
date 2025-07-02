@@ -8,12 +8,16 @@ import { PassengerInfo } from "../pages/passengerInfo";
 //Вибрати квиток для реєстрації
 //Заповнити реєстраційні дані
 
+test.beforeEach(async ({ page,findTicketsData }) => {
+  await page.goto(findTicketsData.link);
+});
+
 //Тест1.Знайти квитки по заданим параметрам;
 test('Find ticket', async ({ page, findTicketsData }) => {
 
   const searchForTickets = new FindTicketsPage(page);
 
-  await searchForTickets.goToMainPage(findTicketsData.link);
+  ///await searchForTickets.goToMainPage(findTicketsData.link);
   await searchForTickets.enterFromCity(findTicketsData.city1);
   await searchForTickets.enterToCity(findTicketsData.city2);
   await searchForTickets.selectDate(findTicketsData.date);
@@ -26,7 +30,7 @@ test('Find ticket', async ({ page, findTicketsData }) => {
 //Тест2.Вибрати квиток для реєстрації
 test("Select first ticket", async ({ page, findTicketsData }) => {
   const searchForTickets = new FindTicketsPage(page);
-  await searchForTickets.goToMainPage(findTicketsData.link);
+///  await searchForTickets.goToMainPage(findTicketsData.link);
   await searchForTickets.enterFromCity(findTicketsData.city1);
   await searchForTickets.enterToCity(findTicketsData.city2);
   await searchForTickets.selectDate(findTicketsData.date);
@@ -41,7 +45,7 @@ test("Fill passanger info", async ({ page, findTicketsData }) => {
   const searchForTickets = new FindTicketsPage(page);
   const fillData = new PassengerInfo(page);
 
-await searchForTickets.goToMainPage(findTicketsData.link);
+  ///await searchForTickets.goToMainPage(findTicketsData.link);
   await searchForTickets.enterFromCity(findTicketsData.city1);
   await searchForTickets.enterToCity(findTicketsData.city2);
   await searchForTickets.selectDate(findTicketsData.date);
