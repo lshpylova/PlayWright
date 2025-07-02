@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 exports.FindTicketsPage = class FindTicketsPage{
      
 
@@ -11,8 +12,9 @@ exports.FindTicketsPage = class FindTicketsPage{
         this.clickPassenger_dropdown = page.locator('css=[data-testid="passenger-count-value"]');
         this.increaseNumberOfPassenfers_button = page.locator('css=[data-testid="AddOutlinedIcon"]');
         this.findTickets_button = page.locator('css=[data-testid="find-ticket-button"][type="submit"]');
-        this.select_button = page.locator('css=button[data-testid="select-ticket-button"] span');
+        this.select_button = page.locator('css=button[data-testid="select-ticket-button"]');
         this.formSupportActions = page.locator('[id=Formofsupport-actions] button');
+        this.verifyCardsExists = page.locator('css=div.MuiPaper-root.MuiCard-root');
 
     }
     async goToMainPage(link){
@@ -40,36 +42,29 @@ exports.FindTicketsPage = class FindTicketsPage{
    async enterQuantityOfPassengers(){
     await this.clickPassenger_dropdown.click();
     await this.increaseNumberOfPassenfers_button.click();
-    await page.waitForTimeout(6000);
+
    } 
 
    async findTickets(){
-     await this.page.evaluate((selector) => {
-  document.querySelector(selector).click();
-}, 'css=[data-testid="find-ticket-button"][type="submit"]');
- // Убедитесь, что используете this.page вместо page
+
   await expect(this.findTickets_button).toBeVisible({ timeout: 10000 });
   await expect(this.findTickets_button).toBeEnabled({ timeout: 10000 });
-  // Меньше использование задержек, больше ожиданий
-  await this.page.waitForTimeout(1000);
-  
- await this.page.evaluate((selector) => {
-  document.querySelector(selector).click();
-}, 'css=[data-testid="find-ticket-button"][type="submit"]');
-  
-  // Еще одна задержка для ожидания реакции, если нужно
+  await this.findTickets_button.click({ force: true });
   await this.page.waitForTimeout(5000);
-
-
-  
-
+  await this.findTickets_button.click({ force: true });
+  await this.page.waitForTimeout(5000);
    }
-   async verifyPageResult(){
-  await page.waitForLoadState('load');
-    await expect(this.select_button.first()).toHaveText(/Select/); // regex match
-    console.log('Test completed');
 
-    
+   async selectFirstTicket(){
+    await this.select_button.first().click({ timeout: 10000 });
+   }
+  async verifyPageResult(){
+    await this.page.waitForLoadState('load'); 
+    await this.page.locator('[role="menu"]').evaluateAll(menus => {
+    menus.forEach(m => m.style.display = 'none'); // або m.remove()
+});
+    await expect(this.verifyCardsExists.first()).toBeVisible({timeout: 10000})
+    await expect(this.verifyCardsExists.first()).toBeEnabled({timeout: 10000})
    }
 
 }

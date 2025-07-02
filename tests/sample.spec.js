@@ -29,12 +29,9 @@ await expect(button).toBeVisible();
 await expect(button).toBeEnabled();
 await button.click({ force: true });
 await page.waitForTimeout(6000);
-
 await button.click({ force: true });
 
-await page.waitForTimeout(6000); // Задержка, чтобы дать время реакции
-// Ждем полного завершения загрузки страницы
-
+await page.waitForTimeout(6000); 
 await page.waitForLoadState('load');
 const locator = page.locator('css=button[data-testid="select-ticket-button"] span').first();
 await expect(locator).toHaveText('Select');
