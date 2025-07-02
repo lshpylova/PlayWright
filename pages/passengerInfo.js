@@ -17,10 +17,10 @@ exports.PassengerInfo = class PassengerInfo {
 
     }
 
-    async fillPassengerData(firstName, lastName, phoneNumber, email, check) {
+    async fillPassengerData(firstName, lastName,discountList, phoneNumber, email) {
         await this.firstName_input.fill(firstName);
         await this.lastName_input.fill(lastName);
-        await this.discount_list.fill("Дитячий - до 6 років, -20%");
+        await this.discount_list.fill(discountList);
        /// await page.pause();
         await this.discount_list.first().click();
         await this.discountSelect.click();
